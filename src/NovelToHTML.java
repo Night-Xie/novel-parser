@@ -1,3 +1,5 @@
+package src;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -124,24 +126,24 @@ public class NovelToHTML {
 
        // System.out.print(" ... cloning index");
         // create index.html
-        File index = new File(indexOutputDirectory + "/index.html");
+        File index = new File(indexOutputDirectory + "/resources/index.html");
         if(index.exists()) index.delete();
         Files.copy(indexTemplate.toPath(), index.toPath());
         //System.out.println(" ...  done");
 
         // copy css
-        File css = new File(novelOutputDirectory + "/styles.css");
+        File css = new File(novelOutputDirectory + "/resources/styles.css");
         if(css.exists()) css.delete();
         Files.copy(cssTemplate.toPath(), css.toPath());
-        css = new File(indexOutputDirectory + "/styles.css");
+        css = new File(indexOutputDirectory + "/resources/styles.css");
         if(css.exists()) css.delete();
         Files.copy(cssTemplate.toPath(), css.toPath());
 
         // copy js
-        File js = new File(novelOutputDirectory + "/scripts.js");
+        File js = new File(novelOutputDirectory + "/resources/scripts.js");
         if(js.exists()) js.delete();
         Files.copy(jsTemplate.toPath(), js.toPath());
-        js = new File(indexOutputDirectory + "/scripts.js");
+        js = new File(indexOutputDirectory + "/resources/scripts.js");
         if(js.exists()) js.delete();
         Files.copy(jsTemplate.toPath(), js.toPath());
 
