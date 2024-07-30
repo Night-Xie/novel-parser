@@ -42,6 +42,9 @@ public class NovelToHTML {
     }
 
     public void convert() throws IOException {
+
+        Pattern chapterSplitter = Pattern.compile("^第[0-9一二三四五六七八九十百零]*章.*");
+
         File novel = new File(filepath);
         if(!novel.exists()) throw new FileNotFoundException("Input file cannot be found. Check file path?");
         if(!novel.canRead()) throw new FileNotFoundException("Input file cannot be read.");
@@ -51,7 +54,7 @@ public class NovelToHTML {
 
         // get summary for TOC
         while(reader.hasNextLine()) {
-            if(Pattern.matches("第.+章.*", nextLine)) break;
+            if(Pattern.matches(chapterSplitter.pattern(), nextLine)) break;
             else {
                 novelSummary.append("<p>");
                 novelSummary.append(nextLine);
@@ -82,7 +85,7 @@ public class NovelToHTML {
             while(reader.hasNextLine()) {
                 nextLine = reader.nextLine().strip();
                 //if (nextLine.contains("第" + (chapterNumber + 1) + "章")) break;
-                if (Pattern.matches("第.+章.*", nextLine)) {
+                if (Pattern.matches(chapterSplitter.pattern(), nextLine)) {
                     break;
                 }
                 if(!nextLine.isBlank()) {
@@ -122,28 +125,28 @@ public class NovelToHTML {
         replace(toc.toPath(), "_TITLE", "目录");
         replace(toc.toPath(), "_SUMMARY", novelSummary.toString());
         replace(toc.toPath(), "_TOC", tocLinks.toString());
-       // System.out.println(" ... done");
+        // System.out.println(" ... done");
 
-       // System.out.print(" ... cloning index");
+        // System.out.print(" ... cloning index");
         // create index.html
-        File index = new File(indexOutputDirectory + "/resources/index.html");
+        File index = new File(indexOutputDirectory + "/index.html");
         if(index.exists()) index.delete();
         Files.copy(indexTemplate.toPath(), index.toPath());
         //System.out.println(" ...  done");
 
         // copy css
-        File css = new File(novelOutputDirectory + "/resources/styles.css");
+        File css = new File(novelOutputDirectory + "/styles.css");
         if(css.exists()) css.delete();
         Files.copy(cssTemplate.toPath(), css.toPath());
-        css = new File(indexOutputDirectory + "/resources/styles.css");
+        css = new File(indexOutputDirectory + "/styles.css");
         if(css.exists()) css.delete();
         Files.copy(cssTemplate.toPath(), css.toPath());
 
         // copy js
-        File js = new File(novelOutputDirectory + "/resources/scripts.js");
+        File js = new File(novelOutputDirectory + "/scripts.js");
         if(js.exists()) js.delete();
         Files.copy(jsTemplate.toPath(), js.toPath());
-        js = new File(indexOutputDirectory + "/resources/scripts.js");
+        js = new File(indexOutputDirectory + "/scripts.js");
         if(js.exists()) js.delete();
         Files.copy(jsTemplate.toPath(), js.toPath());
 
