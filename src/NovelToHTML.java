@@ -1,8 +1,6 @@
 package src;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
@@ -12,15 +10,26 @@ import java.util.regex.Pattern;
 
 public class NovelToHTML {
 
-    public String filepath = "resources/novels/隔壁小王(全息)-en-dual_modified.txt";
-    public String indexOutputDirectory = "/Users/nightmare/Desktop/HTTP_Novels/";
-    public String novelOutputDirectory = "/Users/nightmare/Desktop/HTTP_Novels/隔壁小王_en_dual/";
-    //public static String novelOutputDirectory = "resources/隔壁小王_en_dual/";
+    public String filepath;
+    public String indexOutputDirectory;
+    public String novelOutputDirectory;
 
-    NovelToHTML(String filepath, String novelOutputDirectory, String indexOutputDirectory) {
-        this.filepath = filepath;
-        this.novelOutputDirectory = novelOutputDirectory;
-        this.indexOutputDirectory = indexOutputDirectory;
+    NovelToHTML(String[] args) {
+        if(args.length > 3) {
+            StringBuilder flags = new StringBuilder();
+            for (int i = 3; i < args.length; i++) {
+                flags.append(args[i]);
+            }
+            if (flags.toString().contains("-a")) ARABIC_CHAPTER_NUMBERS_ONLY_FLAG = true;
+
+            this.filepath = args[0];
+            this.novelOutputDirectory = args[1];
+            this.indexOutputDirectory = args[2];
+        }
+        else {
+            System.out.println("Incorrect number of arguments, " +
+                    "try : java NovelToHTML.java originalNovelFilepath novelOutputDirectory indexOutputDirectory");
+        }
     }
 
     private static final StringBuilder tocLinks = new StringBuilder();
@@ -32,8 +41,9 @@ public class NovelToHTML {
     public static File cssTemplate = new File("resources/styles.css");
     public static File jsTemplate = new File("resources/scripts.js");
 
-
     public static final Charset charset = StandardCharsets.UTF_8;
+
+    Boolean ARABIC_CHAPTER_NUMBERS_ONLY_FLAG = false;
 
     public static void replace(Path path, String regex, String replacement) throws IOException {
         String content = new String(Files.readAllBytes(path), charset);
@@ -43,7 +53,12 @@ public class NovelToHTML {
 
     public void convert() throws IOException {
 
-        Pattern chapterSplitter = Pattern.compile("^第[0-9一二三四五六七八九十百零]*章.*");
+        Pattern chapterSplitter;
+
+        if(ARABIC_CHAPTER_NUMBERS_ONLY_FLAG) {
+            chapterSplitter = Pattern.compile("^第[0-9]*章.*");
+        }
+        else chapterSplitter = Pattern.compile("^第[0-9一二三四五六七八九十百零]*章.*");
 
         File novel = new File(filepath);
         if(!novel.exists()) throw new FileNotFoundException("Input file cannot be found. Check file path?");
@@ -153,11 +168,8 @@ public class NovelToHTML {
     }
 
     public static void main(String[] args) {
-        if(args.length != 3)
-            System.out.println("Incorrect number of arguments, " +
-                    "try : java NovelToHTML.java originalNovelFilepath novelOutputDirectory indexOutputDirectory");
         try {
-            NovelToHTML updater = new NovelToHTML(args[0], args[1], args[2]);
+            NovelToHTML updater = new NovelToHTML(args);
             updater.convert();
             System.out.println("Conversion completed.");
         } catch (IOException e) {

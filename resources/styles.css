@@ -1,9 +1,9 @@
 
 body {
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: white;
     text-align:left;
-    margin:3%;
+    margin:3px;
     font-family: "Arial", sans-serif;
     font-size: xxx-large;
 }
@@ -62,7 +62,7 @@ a:hover {
     transition:0.3s;
     box-sizing: border-box;
     display: inline-block;
-    font-size: medium;
+    font-size: x-large;
     vertical-align: middle;
 }
 
@@ -90,13 +90,12 @@ a:hover {
     padding: 12px 17px;
     background-color: black;
     border-color : goldenrod;
-    font-size: medium;
     margin-right: 5px;
 }
 
-.dark-mode {
-    background-color: black;
-    color: white;
+.light-mode {
+    background-color: white;
+    color: black;
 }
 
 .button-dark, .button-light {

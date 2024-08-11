@@ -1,15 +1,16 @@
 function darkMode() {
     var element = document.body;
     var content = document.getElementById("darkModeButton");
-    if(element.classList.toggle("dark-mode"))
-    {
-        content.innerText = "🌑";
-        content.className = "button-dark";
-    }
-    else
+    if(element.classList.toggle("light-mode"))
     {
         content.innerText = "🌕";
         content.className = "button-light";
+    }
+    else
+    {
+        content.innerText = "🌑";
+        content.className = "button-dark";
+
     }
 }
 
