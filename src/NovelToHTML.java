@@ -15,7 +15,7 @@ public class NovelToHTML {
     public String novelOutputDirectory;
 
     NovelToHTML(String[] args) {
-        if(args.length > 3) {
+        if(args.length >= 3) {
             StringBuilder flags = new StringBuilder();
             for (int i = 3; i < args.length; i++) {
                 flags.append(args[i]);
@@ -35,11 +35,11 @@ public class NovelToHTML {
     private static final StringBuilder tocLinks = new StringBuilder();
     private static final StringBuilder novelSummary = new StringBuilder();
 
-    public static File chapterTemplate = new File("resources/chapter_template.html");
-    public static File tocTemplate = new File("resources/toc_template.html");
-    public static File indexTemplate = new File("resources/index.html");
-    public static File cssTemplate = new File("resources/styles.css");
-    public static File jsTemplate = new File("resources/scripts.js");
+    public static File chapterTemplate = new File("novel-parser/resources/chapter_template.html");
+    public static File tocTemplate = new File("novel-parser/resources/toc_template.html");
+    public static File indexTemplate = new File("novel-parser/resources/index.html");
+    public static File cssTemplate = new File("novel-parser/resources/styles.css");
+    public static File jsTemplate = new File("novel-parser/resources/scripts.js");
 
     public static final Charset charset = StandardCharsets.UTF_8;
 
@@ -56,9 +56,9 @@ public class NovelToHTML {
         Pattern chapterSplitter;
 
         if(ARABIC_CHAPTER_NUMBERS_ONLY_FLAG) {
-            chapterSplitter = Pattern.compile("^第[0-9]*章.*");
+            chapterSplitter = Pattern.compile("^\\s*第[0-9]+章.*");
         }
-        else chapterSplitter = Pattern.compile("^第[0-9一二三四五六七八九十百零]*章.*");
+        else chapterSplitter = Pattern.compile("^\\s*第[0-9一二三四五六七八九十百零]*章.*");
 
         File novel = new File(filepath);
         if(!novel.exists()) throw new FileNotFoundException("Input file cannot be found. Check file path?");
@@ -78,10 +78,12 @@ public class NovelToHTML {
             nextLine = reader.nextLine();
         }
 
+        (new File(novelOutputDirectory)).mkdir();
+
         // generate chapters
         int chapterNumber = 1;
         while(reader.hasNextLine()) {
-            //System.out.print("processing... chapter " + chapterNumber);
+            System.out.println("processing... chapter " + chapterNumber);
             String chapterFileName = "chapter_" + chapterNumber + ".html";
 
             //use chapter_template.html to create new mock files with filename chapter_x.html in output dir
