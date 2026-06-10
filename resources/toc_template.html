@@ -1,38 +1,46 @@
 <!doctype html>
-<html>
+<html lang="zh">
 <head>
-<title>_TITLE</title>
+    <title>_TITLE</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#256F46">
     <link href="styles.css" rel="stylesheet">
     <script src="scripts.js"></script>
 </head>
 <body>
-<div class = "border-box">
-    <br>
-    <a id = "top"></a>
-<a href="#bottom" class = "button-anchor">⬇</a>
-<button onclick="big()" id="bigButton" class="button-size">大</button>
-<button onclick="medium()" id="mediumButton" class="button-size">中</button>
-<button onclick="small()" id="smallButton" class="button-size">小</button>
-    <button onclick="darkMode()" id="darkModeButton" class="button-light">🌑</button>
+    <div id="top"></div>
+    
+    <div class="menu-bar">
+        <a href="../index.html" style="text-decoration: none; font-size: x-large; padding-right: 10px;">🏠</a>
+        <h2>_TITLE</h2>
+        <button onclick="big()">大</button>
+        <button onclick="medium()">中</button>
+        <button onclick="small()">小</button>
+        <button onclick="darkMode()" id="darkModeButton">🌑</button>
+        <a href="#bottom" style="padding: 5px;">⬇</a>
+        
+        <div style="display: flex; align-items: center; gap: 5px; margin-top: 5px; width: 100%;">
+            <input type="number" id="jumpInput" placeholder="Chap #" class="jump-input">
+            <button onclick="jumpToChapter()" class="jump-button">Go</button>
+        </div>
+    </div>
 
-    <br>
-    <br>
-</div>
-<div class = "border-box">
-_SUMMARY
-</div>
-<div class = "border-box">
-    <br>
-_TOC
-    <br>
-</div>
-<div class = "border-box">
-    <br>
-    <a id="bottom"></a>
-    <a href="#top" class = "button-anchor">⬆</a>
-    <br>
-    <br>
-</div>
+    <button id="resumeBtn" class="resume-button" style="display: none;"></button>
+
+    <div class="content">
+        <div class="summary">
+            _SUMMARY
+        </div>
+        <hr>
+        <div class="toc-links">
+            _TOC
+        </div>
+    </div>
+
+    <div id="bottom" class="nav-bar">
+        <a href="#top">⬆</a>
+    </div>
 </body>
 </html>

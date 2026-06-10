@@ -1,38 +1,39 @@
 <!doctype html>
-<html>
+<html lang="zh">
 <head>
-<title>_TITLE</title>
+    <title>_TITLE</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#256F46">
     <link href="styles.css" rel="stylesheet">
     <script src="scripts.js"></script>
 </head>
 <body>
-<div class = "border-box">
-<h2>_TITLE</h2>
-<br>
-<a id = "top"></a>
-<a href="#bottom" class = "button-anchor">⬇</a>
-<button onclick="serif()" id="serifButton" class="button-font">sans-serif</button>
-<button onclick="big()" id="bigButton" class="button-size">大</button>
-<button onclick="medium()" id="mediumButton" class="button-size">中</button>
-<button onclick="small()" id="smallButton" class="button-size">小</button>
-    <button onclick="darkMode()" id="darkModeButton" class="button-light">🌑</button>
+    <div class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+    </div>
+    <div id="top"></div>
+    
+    <div class="menu-bar">
+        <a href="../index.html" style="text-decoration: none; font-size: x-large; padding-right: 10px;">🏠</a>
+        <h2>_TITLE</h2>
+        <a href="#bottom">⬇</a>
+        <button onclick="serif()" id="serifButton">sans-serif</button>
+        <button onclick="big()">大</button>
+        <button onclick="medium()">中</button>
+        <button onclick="small()">小</button>
+        <button onclick="darkMode()" id="darkModeButton\">🌑</button>
+    </div>
+    <div class="content">
+        _BODY
+    </div>
 
-    <br><br>
-</div>
-<div class = "border-box">
-<br>
-_BODY
-<br>
-</div>
-<div class = "border-box">
-<br>
-<a id="bottom"></a>
-<a href="#top" class = "button-anchor">⬆</a>
-<a href="_PREV">上一章</a>
-<a href="_TOC">目录</a>
-<a href="_NEXT">下一章</a>
-    <br><br>
-</div>
+    <div id="bottom" class="nav-bar">
+        <a href="_PREV" id="prevLink">上一章</a>
+        <a href="_TOC">目录</a>
+        <a href="_NEXT" id="nextLink">下一章</a>
+        <a href="#top">⬆</a>
+    </div>
 </body>
 </html>
